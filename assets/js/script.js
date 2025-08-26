@@ -75,17 +75,24 @@ formInputs.forEach(input => {
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-navigationLinks.forEach((link, linkIndex) => {
+navigationLinks.forEach(link => {
   link.addEventListener("click", () => {
-    pages.forEach((page, pageIndex) => {
-      if (link.innerHTML.toLowerCase() === page.dataset.page) {
+    const targetPage = link.innerHTML.toLowerCase();
+
+    // Activate the correct page
+    pages.forEach(page => {
+      if (page.dataset.page === targetPage) {
         page.classList.add("active");
-        navigationLinks[pageIndex].classList.add("active");
-        window.scrollTo(0, 0);
       } else {
         page.classList.remove("active");
-        navigationLinks[pageIndex].classList.remove("active");
       }
     });
+
+    // Update navbar active state
+    navigationLinks.forEach(nav => nav.classList.remove("active"));
+    link.classList.add("active");
+
+    window.scrollTo(0, 0);
   });
 });
+
